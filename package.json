@@ -1,0 +1,23 @@
+{
+  "name": "markpad",
+  "private": true,
+  "version": "1.1.0",
+  "description": "MarkPad - a tiny markdown editor for your phone",
+  "scripts": {
+    "build": "node tools/build.mjs && tsc -p tsconfig.json && node tools/rewrite-imports.mjs",
+    "watch": "tsc -p tsconfig.json --watch --preserveWatchOutput",
+    "static": "node tools/serve.mjs",
+    "test": "node node_modules/typescript/bin/tsc -p tsconfig.smoke.json && node tools/smoke.cjs",
+    "icons": "python tools/make-icon.py",
+    "apk": "powershell -NoProfile -ExecutionPolicy Bypass -File android/build.ps1"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "typescript": "5.7.2"
+  }
+}

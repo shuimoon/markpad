@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+.npm-cache/
+
+# build & test output
+.smoke/
+android/build/
+*.keystore
+android/debug.keystore
+
+# screenshots from the visual walkthrough
+.shots/
+
+# editor / OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log

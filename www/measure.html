@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>MarkPad measure</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./vendor/react.js"></script>
+    <script src="./vendor/react-dom.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "./vendor/react.shim.js",
+          "react-dom": "./vendor/react-dom.shim.js",
+          "react-dom/client": "./vendor/react-dom-client.shim.js"
+        }
+      }
+    </script>
+    <style>
+      #out {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: #fff;
+        font: 12px/1.4 monospace;
+        white-space: pre-wrap;
+        margin: 0;
+        padding: 8px;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./js/main.js"></script>
+    <script type="module">
+      const wait = (ms) => new Promise((r) => setTimeout(r, ms))
+      await wait(700)
+      const sel = [
+        'html',
+        'body',
+        '#root',
+        '.app-shell',
+        '.screen',
+        '.lib-header',
+        '.lib-title',
+        '.search-shell',
+        '.lib-body',
+        '.doc-card',
+        '.doc-excerpt',
+        '.fab',
+      ]
+      const lines = []
+      const root = document.documentElement
+      lines.push(
+        'viewport=' +
+          root.clientWidth +
+          'x' +
+          root.clientHeight +
+          ' scrollW=' +
+          root.scrollWidth +
+          ' bodyScrollW=' +
+          document.body.scrollWidth +
+          ' dpr=' +
+          window.devicePixelRatio
+      )
+      for (const s of sel) {
+        const el = document.querySelector(s)
+        if (!el) {
+          lines.push(s + ' MISSING')
+          continue
+        }
+        const r = el.getBoundingClientRect()
+        const cs = getComputedStyle(el)
+        lines.push(
+          `${s} x=${r.x.toFixed(1)} w=${r.width.toFixed(1)} h=${r.height.toFixed(1)} scrollW=${el.scrollWidth} pad=${cs.padding} box=${cs.boxSizing} maxW=${cs.maxWidth}`
+        )
+      }
+      const pre = document.createElement('pre')
+      pre.id = 'out'
+      pre.textContent = lines.join('\n')
+      document.body.appendChild(pre)
+    </script>
+  </body>
+</html>
